@@ -1,0 +1,135 @@
+.sidebar {
+  color: #fff;
+  position: fixed;
+  min-width: 260px;
+  overflow-y: scroll;
+  max-height: 100vh!important;
+  background: #841f30;
+  transition: all 0.5s ease;
+  padding-bottom: 48px;
+}
+
+/* scrollbar width */
+::-webkit-scrollbar {
+  width: 15px;
+}
+
+.sidebar.active {
+  margin-left: -260px;
+}
+
+.offcanvas-md.offcanvas-start.show {
+  width: 300px;
+}
+
+.menu > p {
+  color: #828ea5;
+  font-size: 14px;
+  padding-left: 20px;
+  margin-bottom: 12px;
+}
+
+.item-menu {
+  display: flex;
+  font-size: 16px;
+  color: #828ea5;
+  font-weight: 500;
+  padding: 14px 40px;
+  position: relative;
+  align-items: center;
+  text-decoration: none;
+}
+
+.item-menu.active,
+.item-menu:hover {
+  color: #fff500;
+  font-weight: 600;
+}
+
+.item-menu.active::before {
+  content: '';
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: 8px;
+  margin: 14px 0;
+  position: absolute;
+  border-radius: 4px;
+  transform: translateX(-50%);
+  background-color: #fff500;
+}
+
+.icon {
+  width: 28px;
+  height: 28px;
+  margin-right: 12px;
+  background-size: cover;
+  display: inline-block;
+}
+
+.icon-size {
+  font-size: 25px;
+}
+
+.ic-stats {
+  background-image: url('../images/ic_overview_inact.svg');
+}
+
+.item-menu.active .ic-stats,
+.item-menu:hover .ic-stats {
+  background-image: url('../images/ic_overview_act.svg');
+}
+
+.ic-trans {
+  background-image: url('../images/ic_transaction_inact.svg');
+}
+
+.item-menu.active .ic-trans,
+.item-menu:hover .ic-trans {
+  background-image: url('../images/ic_transaction_act.svg');
+}
+
+.ic-msg {
+  background-image: url('../images/ic_messages_inact.svg');
+}
+
+.item-menu.active .ic-msg,
+.item-menu:hover .ic-msg {
+  background-image: url('../images/ic_messages_act.svg');
+}
+
+.ic-account {
+  background-image: url('../images/ic_account_inact.svg');
+}
+
+.item-menu.active .ic-account,
+.item-menu:hover .ic-account {
+  background-image: url('../images/ic_account_act.svg');
+}
+
+.ic-settings {
+  background-image: url('../images/ic_settings_inact.svg');
+}
+
+.item-menu.active .ic-settings,
+.item-menu:hover .ic-settings {
+  background-image: url('../images/ic_settings_act.svg');
+}
+
+.ic-help {
+  background-image: url('../images/ic_help_inact.svg');
+}
+
+.item-menu.active .ic-help,
+.item-menu:hover .ic-help {
+  background-image: url('../images/ic_help_act.svg');
+}
+
+.ic-logout {
+  background-image: url('../images/ic_logout_inact.svg');
+}
+
+.item-menu.active .ic-logout,
+.item-menu:hover .ic-logout {
+  background-image: url('../images/ic_logout_act.svg');
+}
