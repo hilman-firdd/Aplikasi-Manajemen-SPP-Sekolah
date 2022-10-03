@@ -11,9 +11,22 @@ class KeuanganController extends Controller
 {
     public function index()
     {
-        $keuangan = Keuangan::orderBy('created_at','desc')->paginate(10);
+        $keuangan = Keuangan::orderBy('created_at', 'desc')->paginate(10);
+        $totalkd = Keuangan::all()->toArray();
+        $jumlahIN = 0;
+        $jumlahOut = 0;
+        $data = Keuangan::get();
+        foreach ($data as $dat) {
+            if ($dat['tipe'] == 'in') {
+                $jumlahIN += $dat['jumlah'];
+            } else if ($dat['tipe'] == 'out') {
+                $jumlahOut += $dat['jumlah'];
+            }
+        }
+        $totalKD = $jumlahIN + $jumlahOut;
         return view('admin.keuangan.index', [
-            'keuangan' => $keuangan,     
+            'keuangan' => $keuangan,
+            'jml_kd' => $totalKD
         ]);
     }
 
@@ -25,19 +38,19 @@ class KeuanganController extends Controller
             'keterangan' => 'nullable',
         ]);
 
-        $keuangan = Keuangan::orderBy('created_at','desc')->first();
-        if($keuangan != null){
+        $keuangan = Keuangan::orderBy('created_at', 'desc')->first();
+        if ($keuangan != null) {
             $simpan = Keuangan::make([
                 'tipe' => $request->keperluan,
                 'jumlah' => $request->jumlah,
                 'keterangan' => $request->keterangan
             ]);
-            if($request->keperluan == 'in'){
+            if ($request->keperluan == 'in') {
                 $simpan->total_kas = $keuangan->total_kas + $request->jumlah;
-            }else if($request->keperluan == 'out'){
+            } else if ($request->keperluan == 'out') {
                 $simpan->total_kas = $keuangan->total_kas - $request->jumlah;
             }
-        }else{
+        } else {
             $simpan = Keuangan::make([
                 'tipe' => $request->keperluan,
                 'jumlah' => $request->jumlah,
@@ -46,22 +59,21 @@ class KeuanganController extends Controller
             $simpan->total_kas = $request->jumlah;
         }
 
-        if($simpan->save()){
+        if ($simpan->save()) {
             return redirect()->route('keuangan.index')->with([
                 'type' => 'success',
                 'msg' => 'Pencatatan Keuangan dibuat'
             ]);
-        }else{
+        } else {
             return redirect()->route('keuangan.index')->with([
                 'type' => 'danger',
                 'msg' => 'Terjadi Kesalahan'
             ]);
         }
-
     }
 
     public function export()
     {
-        return Excel::download(new KeuanganExport, 'mutasi_keuangan-'.now().'.xlsx');
+        return Excel::download(new KeuanganExport, 'mutasi_keuangan-' . now() . '.xlsx');
     }
 }

@@ -22,6 +22,7 @@
     <div class="row">
         <div class="col-12">
             <div class="card">
+                @permission('siswa-create')
                 <div class="d-flex justify-content-between p-2">
                     <a href="{{ route('siswa.create') }}" class="btn btn-outline-primary btn-sm ml-5">Tambah Siswa</a>
                     <div class="card-options">
@@ -29,6 +30,7 @@
                         <a href="{{ route('siswa.export') }}" class="btn btn-secondary btn-sm ml-2" download="true">Export</a>
                     </div>
                 </div>
+                @endpermission
                 @if(session()->has('msg'))
                 <div class="card-alert alert alert-{{ session()->get('type') }}" id="message" style="border-radius: 0px !important">
                     @if(session()->get('type') == 'success')
@@ -44,6 +46,7 @@
                         <thead class="table-light">
                         <tr>
                             <th class="w-1">No.</th>
+                            <th>Nik</th>
                             <th>Kelas</th>
                             <th>Nama</th>
                             <th>Wali</th>
@@ -53,9 +56,11 @@
                         </tr>
                         </thead>
                         <tbody>
+                        @role('superadmin|admin|bendahara')
                         @foreach ($siswa as $index => $item)
                             <tr>
                                 <td><span class="text-muted">{{ $index+1 }}</span></td>
+                                <td>{{ $item->nik }}</td>
                                 <td>{{ (isset($item->kelas) ? $item->kelas->nama : '-')}}</td>
                                 <td>
                                     <a href="{{ route('siswa.show', $item->id) }}" class="link-unmuted">
@@ -77,9 +82,12 @@
                                     <a class="icon" href="{{ route('siswa.show', $item->id) }}" title="lihat detail">
                                         <i class="fa fa-eye"></i> 
                                     </a>
+                                    @permission('siswa-edit')
                                     <a class="icon" href="{{ route('siswa.edit', $item->id) }}" title="edit item">
                                         <i class="fa fa-edit"></i> 
                                     </a> 
+                                    @endpermission
+                                    @permission('siswa-delete')
                                     <a class="icon btn-delete" href="#!" data-id="{{ $item->id }}" title="delete item">
                                         <i class="fa fa-trash"></i>
                                     </a>
@@ -87,9 +95,41 @@
                                         @csrf 
                                         @method('delete')
                                     </form>
+                                    @endpermission
                                 </td>
                             </tr>
                         @endforeach
+                        @endrole
+                        @role('siswa')
+                        @foreach ($mySiswa as $index => $item)
+                            <tr>
+                                <td><span class="text-muted">{{ $index+1 }}</span></td>
+                                <td>{{ $item->nik }}</td>
+                                <td>{{ (isset($item->kelas) ? $item->kelas->nama : '-')}}</td>
+                                <td>
+                                    <a href="{{ route('siswa.show', $item->id) }}" class="link-unmuted">
+                                        {{ $item->nama }}
+                                    </a>
+                                </td>
+                                <td>
+                                    {{ $item->nama_wali }}
+                                </td>
+                                <td>
+                                    {{ $item->telp_wali }}
+                                </td>
+                                <td>
+                                    @if($item->is_yatim)
+                                        <span class="tag tag-green">Yatim</span>
+                                    @endif
+                                </td>
+                                <td class="text-center d-flex align-items-center">
+                                    <a class="icon" href="{{ route('siswa.show', $item->id) }}" title="lihat detail">
+                                        <i class="fa fa-eye"></i> 
+                                    </a>
+                                </td>
+                            </tr>
+                        @endforeach
+                        @endrole
                         </tbody>
                     </table>
                 </div>

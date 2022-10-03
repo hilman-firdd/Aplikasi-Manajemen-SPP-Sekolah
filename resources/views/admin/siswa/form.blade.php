@@ -34,6 +34,14 @@
                             <input type="text" class="form-control" name="nama" placeholder="Nama Lengkap" value="{{ isset($siswa) ? $siswa->nama : old('nama') }}">
                         </div>
                         <div class="form-group mb-3">
+                            <label class="form-label">Email</label>
+                            <input type="email" class="form-control" name="email" placeholder="Email" value="{{ isset($siswa) ? $siswa->email : old('email') }}">
+                        </div>
+                        <div class="form-group mb-3">
+                            <label class="form-label">NIK</label>
+                            <input type="text" class="form-control" name="nik" placeholder="NIK" value="{{ isset($siswa) ? $siswa->nik : old('nik') }}">
+                        </div>
+                        <div class="form-group mb-3">
                             <label class="form-label">Tempat, Tanggal Lahir</label>
                             <div class="row gutters-xs">
                                 <div class="col-6">

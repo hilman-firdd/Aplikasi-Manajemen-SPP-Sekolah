@@ -37,10 +37,17 @@
                                 </div>
                                 
                                 <div class="form-group">
-                                    <label class="form-label">Email</label>
-									<input type="email" name="email" class="form-control <?php echo e(($errors->has('email')) ? 'is-invalid' : ''); ?>" placeholder="Masukan email" value="<?php echo e(old('email')); ?>">
-                                    <?php if($errors->has('email')): ?>
-                                        <small class="form-text invalid-feedback" style="display: block !important"><?php echo e($errors->first('email')); ?></small>
+                                    <label class="form-label">Email/Username</label>
+									<input type="text" class="form-control <?php $__errorArgs = ['username'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>" name="username" value="<?php echo e(old('username')); ?>" placeholder="Masukan Email/Username" value="<?php echo e(old('username')); ?>" autofocus>
+                                    <?php if($errors->has('username')): ?>
+                                        <small class="form-text invalid-feedback" style="display: block !important"><?php echo e($errors->first('username')); ?></small>
                                     <?php endif; ?>
                                 </div>
                                 <div class="form-group">

@@ -15,7 +15,8 @@ class Tagihan extends Model
         'nama',
         'jumlah',
         'wajib_semua',
-        'kelas_id'
+        'kelas_id',
+        'is_bayar'
     ];
 
     public function transaksi(){

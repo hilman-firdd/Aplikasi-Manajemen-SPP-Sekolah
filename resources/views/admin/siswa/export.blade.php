@@ -18,6 +18,8 @@
         <tr>
             <td>{{ $item->kelas->nama }}</td>
             <td>{{ $item->nama }}</td>
+            <td>{{ $item->email }}</td>
+            <td>{{ $item->nik }}</td>
             <td>{{ $item->tempat_lahir }}</td>
             <td>{{ $item->tanggal_lahir }}</td>
             <td>{{ $item->jenis_kelamin }}</td>

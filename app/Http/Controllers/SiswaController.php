@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use App\Models\Kelas;
 use App\Models\Siswa;
 use App\Models\Tagihan;
@@ -10,9 +11,13 @@ use App\Models\Transaksi;
 use App\Exports\SiswaExport;
 use App\Imports\SiswaImport;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Redirect;
 
 class SiswaController extends Controller
 {
@@ -20,12 +25,21 @@ class SiswaController extends Controller
     {
         $q = $request->get('q');
         if($q == null){
-            $siswa = Siswa::orderBy('created_at','desc')->paginate(15);
+            $siswa = Siswa::orderBy('created_at','desc')
+                        ->paginate(15);
         }else{
-            $siswa = Siswa::where('nama','like','%'.$q.'%')->orderBy('created_at','desc')->paginate(15);
+            $siswa = Siswa::where('nama','like','%'.$q.'%')
+                            ->orWhere('nik','like','%'.$q.'%')
+                            ->orderBy('created_at','desc')->paginate(15);
         }
+
+        $mySiswa = Siswa::orderBy('created_at','desc')
+                        ->where('id', Auth::user()->id)
+                        ->get();
+                        
         return view('admin.siswa.index', [
-            'siswa' => $siswa->appends($request->only('q'))
+            'siswa' => $siswa->appends($request->only('q')),
+            'mySiswa' => $mySiswa
         ]);
     }
 
@@ -40,6 +54,8 @@ class SiswaController extends Controller
         $request->validate([
             'kelas_id' => 'required|numeric',
             'nama' => 'required|max:255',
+            'email' => 'required|email',
+            'nik' => 'required',
             'tempat_lahir' => 'nullable|max:255',
             'tanggal_lahir' => 'nullable|date',
             'jenis_kelamin' => 'nullable|in:L,P',
@@ -48,21 +64,46 @@ class SiswaController extends Controller
             'telp_wali' => 'nullable|numeric',
             'is_yatim' => 'nullable|boolean',
         ]);
+        
+        DB::beginTransaction();
+        try{
+            $siswa = Siswa::make($request->all());
 
-        $siswa = Siswa::make($request->input());
+            if($request->is_yatim != null){
+                $siswa->is_yatim = 1;
+            }else{
+                $siswa->is_yatim = 0;
+            }
 
-        if($request->is_yatim != null){
-            $siswa->is_yatim = 1;
-        }else{
-            $siswa->is_yatim = 0;
-        }
-
-        if($siswa->save()){
-            return redirect()->route('siswa.index')->with([
-                'type' => 'success',
-                'msg' => 'Siswa ditambahkan'
+            $user = User::create([
+                'name' => $request->nama,
+                'username' => strtolower(str_replace(' ', '',($request->nama))),
+                'email' => $request->email,
+                'password' => Hash::make($request->nik)
             ]);
-        }else{
+            
+            $siswa['id'] = $user->id;
+            $user_id = $user->id;
+            $role_id = 4;
+            $user_type = 'App\Models\User';
+
+            DB::table('role_user')->insert(
+                array(
+                    'role_id' => $role_id,
+                    'user_id' => $user_id,
+                    'user_type' => $user_type
+                )
+            );
+
+            DB::commit();
+            if($siswa->save()){
+                return redirect()->route('siswa.index')->with([
+                    'type' => 'success',
+                    'msg' => 'Siswa ditambahkan'
+                ]);
+            }
+        }catch(Exception $e){
+            DB::rollBack();
             return redirect()->route('siswa.index')->with([
                 'type' => 'danger',
                 'msg' => 'Err.., Terjadi Kesalahan'
@@ -84,6 +125,8 @@ class SiswaController extends Controller
         $request->validate([
             'kelas_id' => 'required|numeric',
             'nama' => 'required|max:255',
+            'email' => 'required|email',
+            'nik' => 'required',
             'tempat_lahir' => 'nullable|max:255',
             'tanggal_lahir' => 'nullable|date',
             'jenis_kelamin' => 'nullable|in:L,P',

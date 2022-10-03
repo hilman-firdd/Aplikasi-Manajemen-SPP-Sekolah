@@ -25,6 +25,6 @@ class Siswa extends Model
     }
 
     public function role(){
-        return $this->hasMany('App\Models\M_Role','siswa_id','id');
+        return $this->hasMany('App\Models\M_role','siswa_id','id');
     }
 }

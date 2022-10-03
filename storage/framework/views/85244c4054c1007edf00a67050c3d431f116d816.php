@@ -87,8 +87,8 @@
                 </div>
                 <div class="card-footer text-right">
                     <div class="d-flex">
-                        <a href="<?php echo e(url()->previous()); ?>" class="btn btn-link">Batal</a>
-                        <button type="submit" class="btn btn-primary ml-auto">Simpan</button>
+                        <a href="<?php echo e(url()->previous()); ?>" class="btn btn-danger">Batal</a>
+                        <button type="submit" class="btn btn-primary ms-2">Simpan</button>
                     </div>
                 </div>
             </form>

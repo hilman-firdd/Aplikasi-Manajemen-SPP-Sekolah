@@ -20,19 +20,14 @@ return [
             'siswa' => 'c,r,u,d',
             'kelas' => 'c,r,u,d',
             'periode' => 'c,r,u,d',
-            'kuitansi' => 'c,r,u,d',
+            'laporan' => 'c,r,u,d',
             'pengguna' => 'c,r,u,d',
         ],
         'admin' => [
-            'transaksi-spp' => 'c,r,u,d',
-            'tabungan' => 'c,r,u,d',
-            'keuangan' => 'c,r,u,d',
             'tagihan' => 'c,r,u,d',
             'siswa' => 'c,r,u,d',
             'kelas' => 'c,r,u,d',
             'periode' => 'c,r,u,d',
-            'kuitansi' => 'c,r,u,d',
-            'pengguna' => 'c,r,u,d',
         ],
         'bendahara' => [
             'transaksi-spp' => 'c,r,u,d',
@@ -42,7 +37,12 @@ return [
             'siswa' => 'c,r,u,d',
             'kelas' => 'c,r,u,d',
             'periode' => 'c,r,u,d',
-            'kuitansi' => 'c,r,u,d',
+            'laporan' => 'c,r,u,d',
+        ],
+        'siswa' => [
+            'transaksi-spp' => 'c,r',
+            'tabungan' => 'c,r',
+            'siswa' => 'r',
         ]
     ],
 

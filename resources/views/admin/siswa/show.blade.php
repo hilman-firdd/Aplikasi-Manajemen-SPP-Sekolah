@@ -22,6 +22,8 @@
                             <span class="tag tag-green">Yatim</span>
                         @endif
                     </p>
+                    <p><b>NIK</b> : {{ $siswa->nik }}</p>
+                    <p><b>NIK</b> : {{ $siswa->email }}</p>
                     <p><b>Tempat, Tanggal Lahir</b> : {{ $siswa->tempat_lahir.', '. $siswa->tanggal_lahir }}</p>
                     <p><b>Alamat</b> : {{ $siswa->alamat }}</p>
                     <p><b>Nama Wali</b> : {{ $siswa->nama_wali }}</p>

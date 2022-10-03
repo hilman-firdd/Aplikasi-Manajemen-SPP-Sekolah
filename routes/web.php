@@ -29,14 +29,21 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::prefix('/admin')->middleware('auth')->group(function() {
+Route::prefix('/admin')->middleware('auth')->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index']);
 
-    Route::group(['middleware' => 'auth'], function() {
+    Route::group(['middleware' => 'auth'], function () {
         /*
         Dashboard
         */
         Route::get('pengaturan', [DashboardController::class, 'pengaturan'])->name('pengaturan.index');
+        Route::get('role', [DashboardController::class, 'role'])->name('role.index');
+        Route::get('role-add', [DashboardController::class, 'roleAdd'])->name('role.create');
+        Route::post('role-add', [DashboardController::class, 'roleStore'])->name('role.store');
+
+        Route::get('menu', [DashboardController::class, 'menu'])->name('menu.index');
+        Route::post('menu-add', [DashboardController::class, 'menuStore'])->name('menu.store');
+
         Route::get('ubah-pengaturan', [DashboardController::class, 'editPengaturan'])->name('pengaturan.edit');
         Route::post('ubah-pengaturan/{id}', [DashboardController::class, 'storePengaturan'])->name('pengaturan.store');
         Route::post('cetak-laporan-harian', [DashboardController::class, 'cetak'])->name('laporan-harian.cetak');
@@ -48,7 +55,7 @@ Route::prefix('/admin')->middleware('auth')->group(function() {
         Route::get('periode-tambah', [PeriodeController::class, 'create'])->name('periode.create');
         Route::post('periode-tambah', [PeriodeController::class, 'store'])->name('periode.store');
         Route::get('periode/{periode}/ubah', [PeriodeController::class, 'edit'])->name('periode.edit');
-        Route::post('periode/{periode}/ubah',[PeriodeController::class, 'update'])->name('periode.update');
+        Route::post('periode/{periode}/ubah', [PeriodeController::class, 'update'])->name('periode.update');
         Route::delete('periode/{periode}/hapus', [PeriodeController::class, 'destroy'])->name('periode.destroy');
         /*
         Kelas
@@ -99,8 +106,8 @@ Route::prefix('/admin')->middleware('auth')->group(function() {
         /*
         Tagihan
         */
-        Route::get('tagihan',[TagihanController::class, 'index'])->name('tagihan.index');
-        Route::get('tambah-tagihan',[TagihanController::class, 'create'])->name('tagihan.create');
+        Route::get('tagihan', [TagihanController::class, 'index'])->name('tagihan.index');
+        Route::get('tambah-tagihan', [TagihanController::class, 'create'])->name('tagihan.create');
         Route::post('tambah-tagihan', [TagihanController::class, 'store'])->name('tagihan.store');
         Route::get('tagihan/{tagihan}/ubah', [TagihanController::class, 'edit'])->name('tagihan.edit');
         Route::post('tagihan/{tagihan}/ubah', [TagihanController::class, 'update'])->name('tagihan.update');
@@ -114,12 +121,12 @@ Route::prefix('/admin')->middleware('auth')->group(function() {
         /*
         user
         */
-        Route::group(['middleware' => 'role:superadmin|admin'], function() {
+        Route::group(['middleware' => 'role:superadmin|admin'], function () {
             Route::get('user', [PenggunaController::class, 'index'])->name('user.index');
             Route::get('user-tambah', [PenggunaController::class, 'create'])->name('user.create');
             Route::post('user-tambah', [PenggunaController::class, 'store'])->name('user.store');
             Route::get('user/{user}/ubah', [PenggunaController::class, 'edit'])->name('user.edit');
-            Route::post('user/{user}/ubah',[PenggunaController::class, 'update'])->name('user.update');
+            Route::post('user/{user}/ubah', [PenggunaController::class, 'update'])->name('user.update');
             Route::post('user/{user}/hapus', [PenggunaController::class, 'destroy'])->name('user.destroy');
         });
     });

@@ -37,10 +37,10 @@
                                 </div>
                                 {{-- <div class="card-title text-center"><h3>Login</h3></div> --}}
                                 <div class="form-group">
-                                    <label class="form-label">Email</label>
-									<input type="email" name="email" class="form-control {{ ($errors->has('email')) ? 'is-invalid' : '' }}" placeholder="Masukan email" value="{{ old('email') }}">
-                                    @if($errors->has('email'))
-                                        <small class="form-text invalid-feedback" style="display: block !important">{{ $errors->first('email') }}</small>
+                                    <label class="form-label">Email/Username</label>
+									<input type="text" class="form-control @error('username') is-invalid @enderror" name="username" value="{{ old('username') }}" placeholder="Masukan Email/Username" value="{{ old('username') }}" autofocus>
+                                    @if($errors->has('username'))
+                                        <small class="form-text invalid-feedback" style="display: block !important">{{ $errors->first('username') }}</small>
                                     @endif
                                 </div>
                                 <div class="form-group">

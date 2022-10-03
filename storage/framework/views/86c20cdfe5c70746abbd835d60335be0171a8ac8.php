@@ -22,6 +22,7 @@
     <div class="row">
         <div class="col-12">
             <div class="card">
+                <?php if (app('laratrust')->isAbleTo('siswa-create')) : ?>
                 <div class="d-flex justify-content-between p-2">
                     <a href="<?php echo e(route('siswa.create')); ?>" class="btn btn-outline-primary btn-sm ml-5">Tambah Siswa</a>
                     <div class="card-options">
@@ -29,6 +30,7 @@
                         <a href="<?php echo e(route('siswa.export')); ?>" class="btn btn-secondary btn-sm ml-2" download="true">Export</a>
                     </div>
                 </div>
+                <?php endif; // app('laratrust')->permission ?>
                 <?php if(session()->has('msg')): ?>
                 <div class="card-alert alert alert-<?php echo e(session()->get('type')); ?>" id="message" style="border-radius: 0px !important">
                     <?php if(session()->get('type') == 'success'): ?>
@@ -45,6 +47,7 @@
                         <thead class="table-light">
                         <tr>
                             <th class="w-1">No.</th>
+                            <th>Nik</th>
                             <th>Kelas</th>
                             <th>Nama</th>
                             <th>Wali</th>
@@ -54,9 +57,11 @@
                         </tr>
                         </thead>
                         <tbody>
+                        <?php if (app('laratrust')->hasRole('superadmin|admin|bendahara')) : ?>
                         <?php $__currentLoopData = $siswa; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $index => $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                             <tr>
                                 <td><span class="text-muted"><?php echo e($index+1); ?></span></td>
+                                <td><?php echo e($item->nik); ?></td>
                                 <td><?php echo e((isset($item->kelas) ? $item->kelas->nama : '-')); ?></td>
                                 <td>
                                     <a href="<?php echo e(route('siswa.show', $item->id)); ?>" class="link-unmuted">
@@ -81,9 +86,12 @@
                                     <a class="icon" href="<?php echo e(route('siswa.show', $item->id)); ?>" title="lihat detail">
                                         <i class="fa fa-eye"></i> 
                                     </a>
+                                    <?php if (app('laratrust')->isAbleTo('siswa-edit')) : ?>
                                     <a class="icon" href="<?php echo e(route('siswa.edit', $item->id)); ?>" title="edit item">
                                         <i class="fa fa-edit"></i> 
                                     </a> 
+                                    <?php endif; // app('laratrust')->permission ?>
+                                    <?php if (app('laratrust')->isAbleTo('siswa-delete')) : ?>
                                     <a class="icon btn-delete" href="#!" data-id="<?php echo e($item->id); ?>" title="delete item">
                                         <i class="fa fa-trash"></i>
                                     </a>
@@ -91,9 +99,44 @@
                                         <?php echo csrf_field(); ?> 
                                         <?php echo method_field('delete'); ?>
                                     </form>
+                                    <?php endif; // app('laratrust')->permission ?>
                                 </td>
                             </tr>
                         <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                        <?php endif; // app('laratrust')->hasRole ?>
+                        <?php if (app('laratrust')->hasRole('siswa')) : ?>
+                        <?php $__currentLoopData = $mySiswa; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $index => $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                            <tr>
+                                <td><span class="text-muted"><?php echo e($index+1); ?></span></td>
+                                <td><?php echo e($item->nik); ?></td>
+                                <td><?php echo e((isset($item->kelas) ? $item->kelas->nama : '-')); ?></td>
+                                <td>
+                                    <a href="<?php echo e(route('siswa.show', $item->id)); ?>" class="link-unmuted">
+                                        <?php echo e($item->nama); ?>
+
+                                    </a>
+                                </td>
+                                <td>
+                                    <?php echo e($item->nama_wali); ?>
+
+                                </td>
+                                <td>
+                                    <?php echo e($item->telp_wali); ?>
+
+                                </td>
+                                <td>
+                                    <?php if($item->is_yatim): ?>
+                                        <span class="tag tag-green">Yatim</span>
+                                    <?php endif; ?>
+                                </td>
+                                <td class="text-center d-flex align-items-center">
+                                    <a class="icon" href="<?php echo e(route('siswa.show', $item->id)); ?>" title="lihat detail">
+                                        <i class="fa fa-eye"></i> 
+                                    </a>
+                                </td>
+                            </tr>
+                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                        <?php endif; // app('laratrust')->hasRole ?>
                         </tbody>
                     </table>
                 </div>

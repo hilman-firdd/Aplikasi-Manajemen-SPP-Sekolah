@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\Models\Tagihan;
 use App\Models\Kelas;
 use App\Models\Siswa;
+use App\Models\Tagihan;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 
 class TagihanController extends Controller
@@ -52,12 +53,15 @@ class TagihanController extends Controller
 
         $tagihan = Tagihan::make($request->except('kelas_id'));
         if($request->peserta == 1) {
+            $tagihan['is_bayar'] = 0;
             $tagihan->wajib_semua = 1;
             $tagihan->save();
         }else if($request->peserta == 2){
+            $tagihan['is_bayar'] = 0;
             $tagihan->kelas_id = $request->kelas_id;
             $tagihan->save();
         }else if($request->peserta == 3){
+            $tagihan['is_bayar'] = 0;
             $tagihan->save();
             foreach($request->siswa_id as $siswa_id){
                 $tagihan->siswa()->save(Siswa::find($siswa_id));
