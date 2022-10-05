@@ -52,7 +52,7 @@ class TransaksiController extends Controller
             'name' => $user[2]->name
         ];
 
-        $pdf = \PDF::loadView('tagihanspp', $data);
+        $pdf = \PDF::loadView('admin.tagihan.tagihanspp', $data);
         return $pdf->download('tagihan-spp.pdf');
     }
 
@@ -95,23 +95,8 @@ class TransaksiController extends Controller
             'name' => $user[2]->name
         ];
 
-        $pdf = \PDF::loadView('transaksiprint', $data);
+        $pdf = \PDF::loadView('admin.transaksi.transaksiprint', $data);
         return $pdf->download('bukti-bayar-spp.pdf');
-    }
-
-    public function transaksiPrint(Request $request)
-    {
-        $ids = explode(',', $request->ids);
-        $total = 0;
-        $transaksi = Transaksi::whereIn('id', $ids)->get();
-        foreach ($transaksi as $trans) {
-            $total += $trans->keuangan->jumlah;
-        }
-
-        return view('admin.transaksi.transaksiprint', [
-            'items' => $transaksi,
-            'total' => $total,
-        ]);
     }
 
     //get API list tagihan of siswa

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Menu;
 use App\Models\Role;
+use App\Models\User;
 use App\Models\Kelas;
 use App\Models\Siswa;
 use App\Models\Tagihan;
@@ -165,8 +166,18 @@ class DashboardController extends Controller
     {
         $date = \Carbon\Carbon::create($request->date)->format('Y-m-d');
         $transaksi = Transaksi::orderBy('siswa_id', 'desc')->whereDate('created_at', $date)->get();
+        $user = User::all();
 
-        return view('admin.dashboard.export', ['transaksi' => $transaksi, 'date' => $request->date, 'jumlah' => 0, 'print' => true]);
+        $data = [
+            'transaksi' => $transaksi,
+            'date' => $request->date,
+            'jumlah' => 0,
+            'print' => true,
+            'name' => $user[2]->name
+        ];
+
+        $pdf = \PDF::loadView('admin.dashboard.cetak', $data);
+        return $pdf->stream('laporan-harian.pdf');
     }
 
     public function export(Request $request)

@@ -84,10 +84,9 @@ Route::prefix('/admin')->middleware('auth')->group(function () {
         Transaksi SPP
         */
         Route::get('transaksi-spp', [TransaksiController::class, 'index'])->name('spp.index');
-        Route::post('print-spp', [TransaksiController::class, 'transaksiPrint'])->name('transaksi.print');
-        Route::post('print-spp', [TransaksiController::class, 'printTF'])->name('transaksi.tf');
+        Route::post('print-bukti-spp', [TransaksiController::class, 'printTF'])->name('transaksi.tf');
         Route::get('export-spp', [TransaksiController::class, 'transaksiExport'])->name('transaksi.export');
-        Route::post('print-spp/{siswa?}', [TransaksiController::class, 'print'])->name('spp.print');
+        Route::post('print-tagihan-spp/{siswa?}', [TransaksiController::class, 'print'])->name('spp.print');
         Route::post('export-spp/{siswa?}', [TransaksiController::class, 'export'])->name('spp.export');
         /*
         Keuangan
@@ -114,11 +113,11 @@ Route::prefix('/admin')->middleware('auth')->group(function () {
         Route::post('tagihan/{tagihan}/ubah', [TagihanController::class, 'update'])->name('tagihan.update');
         Route::post('tagihan/{tagihan}/hapus', [TagihanController::class, 'destroy'])->name('tagihan.destroy');
         /*
-        Kuitansi
+        Kuitansi - non aktif
         */
-        Route::get('kuitansi', [KuitansiController::class, 'index'])->name('kuitansi.index');
-        Route::post('kuitansi', [KuitansiController::class, 'store'])->name('kuitansi.store');
-        Route::get('kuitansi/{kuitansi}', [KuitansiController::class, 'print'])->name('kuitansi.print');
+        // Route::get('kuitansi', [KuitansiController::class, 'index'])->name('kuitansi.index');
+        // Route::post('kuitansi', [KuitansiController::class, 'store'])->name('kuitansi.store');
+        // Route::get('kuitansi/{kuitansi}', [KuitansiController::class, 'print'])->name('kuitansi.print');
         /*
         Laporan
         */

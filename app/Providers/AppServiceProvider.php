@@ -26,7 +26,7 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         View::share('sitename', 'Aplikasi SPP | SMKK Bhakti Kencana');
-        View()->composer('*', function($view) {
+        View()->composer('*', function ($view) {
             $view->with('pengaturan', Pengaturan::first());
         });
     }

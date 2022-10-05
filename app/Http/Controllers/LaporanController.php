@@ -26,7 +26,7 @@ class LaporanController extends Controller
             'cetak' => $cetak,
             'name' => $user[2]->name
         ];
-        $pdf = PDF::loadView('laporankeuangan', $data);
-        return $pdf->stream('laporan-keuangan.pdf');
+        $pdf = PDF::loadView('admin.laporan.laporankeuangan', $data);
+        return $pdf->download('laporan-keuangan.pdf');
     }
 }
