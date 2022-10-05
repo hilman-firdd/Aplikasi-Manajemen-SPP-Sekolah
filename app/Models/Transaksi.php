@@ -12,15 +12,18 @@ class Transaksi extends Model
     protected $table = 't_transaksi';
     protected $guarded = [];
 
-    public function tagihan(){
-        return $this->hasOne('App\Models\Tagihan','id','tagihan_id');
+    public function tagihan()
+    {
+        return $this->hasOne('App\Models\Tagihan', 'id', 'tagihan_id');
     }
 
-    public function siswa(){
-        return $this->hasOne('App\Models\Siswa','id','siswa_id');
+    public function siswa()
+    {
+        return $this->hasOne('App\Models\Siswa', 'id', 'siswa_id');
     }
 
-    public function keuangan(){
-        return $this->hasOne('App\Models\Keuangan','transaksi_id','id');
+    public function keuangan()
+    {
+        return $this->hasOne('App\Models\Keuangan', 'transaksi_id', 'id');
     }
 }

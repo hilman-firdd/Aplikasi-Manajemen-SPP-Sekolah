@@ -42,7 +42,8 @@
                                 <select id="siswa" class="form-control" name="siswa_id">
                                     <option value="#">[-- Pilih Siswa --]</option>
                                     @foreach($siswa as $item)
-                                    <option value="{{ $item->id }}"> {{ $item->nama.' - '.$item->kelas->nama.' - ' }}
+                                    <option value="{{ $item->id }}"> {{ $item->nik.' - '.$item->nama.' -
+                                        '.$item->kelas->nama }}
                                     </option>
                                     @endforeach
                                 </select><br>

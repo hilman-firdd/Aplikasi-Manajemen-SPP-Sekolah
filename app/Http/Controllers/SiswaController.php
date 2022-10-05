@@ -24,19 +24,19 @@ class SiswaController extends Controller
     public function index(Request $request)
     {
         $q = $request->get('q');
-        if($q == null){
-            $siswa = Siswa::orderBy('created_at','desc')
-                        ->paginate(15);
-        }else{
-            $siswa = Siswa::where('nama','like','%'.$q.'%')
-                            ->orWhere('nik','like','%'.$q.'%')
-                            ->orderBy('created_at','desc')->paginate(15);
+        if ($q == null) {
+            $siswa = Siswa::orderBy('created_at', 'desc')
+                ->paginate(15);
+        } else {
+            $siswa = Siswa::where('nama', 'like', '%' . $q . '%')
+                ->orWhere('nik', 'like', '%' . $q . '%')
+                ->orderBy('created_at', 'desc')->paginate(15);
         }
 
-        $mySiswa = Siswa::orderBy('created_at','desc')
-                        ->where('id', Auth::user()->id)
-                        ->get();
-                        
+        $mySiswa = Siswa::orderBy('created_at', 'desc')
+            ->where('id', Auth::user()->id)
+            ->get();
+
         return view('admin.siswa.index', [
             'siswa' => $siswa->appends($request->only('q')),
             'mySiswa' => $mySiswa
@@ -64,24 +64,25 @@ class SiswaController extends Controller
             'telp_wali' => 'nullable|numeric',
             'is_yatim' => 'nullable|boolean',
         ]);
-        
+
         DB::beginTransaction();
-        try{
+        try {
             $siswa = Siswa::make($request->all());
 
-            if($request->is_yatim != null){
+            if ($request->is_yatim != null) {
                 $siswa->is_yatim = 1;
-            }else{
+            } else {
                 $siswa->is_yatim = 0;
             }
 
             $user = User::create([
                 'name' => $request->nama,
-                'username' => strtolower(str_replace(' ', '',($request->nama))),
+                'username' => strtolower(str_replace(' ', '', ($request->nama))),
+                'nik' => $request->nik,
                 'email' => $request->email,
                 'password' => Hash::make($request->nik)
             ]);
-            
+
             $siswa['id'] = $user->id;
             $user_id = $user->id;
             $role_id = 4;
@@ -96,13 +97,13 @@ class SiswaController extends Controller
             );
 
             DB::commit();
-            if($siswa->save()){
+            if ($siswa->save()) {
                 return redirect()->route('siswa.index')->with([
                     'type' => 'success',
                     'msg' => 'Siswa ditambahkan'
                 ]);
             }
-        }catch(Exception $e){
+        } catch (Exception $e) {
             DB::rollBack();
             return redirect()->route('siswa.index')->with([
                 'type' => 'danger',
@@ -138,18 +139,18 @@ class SiswaController extends Controller
 
         $siswa = $siswa->fill($request->all());
 
-        if($request->is_yatim != null){
+        if ($request->is_yatim != null) {
             $siswa->is_yatim = 1;
-        }else{
+        } else {
             $siswa->is_yatim = 0;
         }
 
-        if($siswa->save()){
+        if ($siswa->save()) {
             return redirect()->route('siswa.index')->with([
                 'type' => 'success',
                 'msg' => 'Siswa diubah'
             ]);
-        }else{
+        } else {
             return redirect()->route('siswa.index')->with([
                 'type' => 'danger',
                 'msg' => 'Err.., Terjadi Kesalahan'
@@ -159,14 +160,14 @@ class SiswaController extends Controller
 
     public function destroy(Siswa $siswa)
     {
-        if(($siswa->transaksi->count() == 0) && ($siswa->tabungan->count() == 0)){
-            if($siswa->delete()){
+        if (($siswa->transaksi->count() == 0) && ($siswa->tabungan->count() == 0)) {
+            if ($siswa->delete()) {
                 return redirect()->route('siswa.index')->with([
                     'type' => 'success',
                     'msg' => 'siswa telah dihapus'
                 ]);
             }
-        }else{
+        } else {
             return redirect()->route('siswa.index')->with([
                 'type' => 'danger',
                 'msg' => 'tidak dapat menghapus siswa yang masih memiliki transaksi'
@@ -185,17 +186,17 @@ class SiswaController extends Controller
         $output = Tabungan::where('tipe', 'out')->where('siswa_id', $siswa->id)->sum('jumlah');
         $tabungan = Tabungan::where('siswa_id', $siswa->id)->orderBy('created_at', 'desc');
 
-        if($tabungan->count() != 0){
+        if ($tabungan->count() != 0) {
             $verify = $tabungan->first()->saldo;
-        }else{
+        } else {
             $verify = 0;
         }
         $tabungan = $tabungan->paginate(10, ['*'], 'tabungan');
 
-        if(($input - $output) == $verify){
+        if (($input - $output) == $verify) {
             $saldo = format_idr($input - $output);
-        }else{
-            $saldo = 'invalid'.format_idr($input - $output);
+        } else {
+            $saldo = 'invalid' . format_idr($input - $output);
         }
 
         $tagihan = $this->getTagihan($siswa);
@@ -218,11 +219,11 @@ class SiswaController extends Controller
             'file' => 'required'
         ]);
 
-        if($request->hasFile('file')){
-            $extensions = ["xls","xlsx","xlm","xla","xlc","xlt","xlw"];
+        if ($request->hasFile('file')) {
+            $extensions = ["xls", "xlsx", "xlm", "xla", "xlc", "xlt", "xlw"];
             $result = [$request->file('file')->getClientOriginalExtension()];
 
-            if(in_array($result[0], $extensions)){
+            if (in_array($result[0], $extensions)) {
                 Excel::import(new SiswaImport, $request->file('file'));
                 return redirect()->route('siswa.index')->with([
                     'type' => 'success',
@@ -241,10 +242,10 @@ class SiswaController extends Controller
             'msg' => 'terjadi kesalahan : no file'
         ]);
     }
-    
+
     public function export()
     {
-        return Excel::download(new SiswaExport, 'siswa-'.now().'.xlsx');
+        return Excel::download(new SiswaExport, 'siswa-' . now() . '.xlsx');
     }
 
     protected function getTagihan(Siswa $siswa)
@@ -253,39 +254,39 @@ class SiswaController extends Controller
         $tagihan_ids = [];
 
         //wajib semua
-        $tagihan_wajib = Tagihan::where('wajib_semua','1')->get()->toArray();
+        $tagihan_wajib = Tagihan::where('wajib_semua', '1')->get()->toArray();
         //kelas only
         $tagihan_kelas = Tagihan::where('kelas_id', $siswa->kelas->id)->get()->toArray();
         //student only
         $tagihan_siswa = [];
         $tagihan_rolesiswa = $siswa->role;
-        foreach($tagihan_rolesiswa as $tag_siswa){
+        foreach ($tagihan_rolesiswa as $tag_siswa) {
             $tagihan_siswa[] = $tag_siswa->tagihan->toArray();
         }
 
         $tagihan_semua = array_merge($tagihan_wajib, $tagihan_kelas, $tagihan_siswa);
-        
-        foreach($tagihan_semua as $tagih){
+
+        foreach ($tagihan_semua as $tagih) {
             $tagihan_ids[] = $tagih['id'];
             $payed = Transaksi::where('tagihan_id', $tagih['id'])->where('siswa_id', $siswa->id)->get();
-            if($payed->count() == 0){
+            if ($payed->count() == 0) {
                 $tagihan[] = [
                     'nama' => $tagih['nama'],
                     'jumlah' => format_idr($tagih['jumlah']),
-                    'diskon'=> '',
-                    'total'=> '',
-                    'is_lunas'=> '0',
+                    'diskon' => '',
+                    'total' => '',
+                    'is_lunas' => '0',
                     'created_at' => '',
                     'keterangan' => ''
                 ];
-            }else{
-                foreach($payed as $pay){
+            } else {
+                foreach ($payed as $pay) {
                     $tagihan[] = [
                         'nama' => $tagih['nama'],
                         'jumlah' => format_idr($tagih['jumlah']),
-                        'diskon'=> format_idr($pay->diskon),
-                        'total'=> format_idr($pay->keuangan->jumlah),
-                        'is_lunas'=> $pay->is_lunas,
+                        'diskon' => format_idr($pay->diskon),
+                        'total' => format_idr($pay->keuangan->jumlah),
+                        'is_lunas' => $pay->is_lunas,
                         'created_at' => $pay->created_at->format('d-m-Y'),
                         'keterangan' => $pay->keterangan
                     ];
@@ -298,20 +299,20 @@ class SiswaController extends Controller
     //api saldo
     public function getSaldo(Siswa $siswa)
     {
-        if($siswa == null){
+        if ($siswa == null) {
             return response()->json(['msg' => 'siswa tidak ditemukan'], 404);
         }
-        if($siswa->tabungan->count() == 0){
+        if ($siswa->tabungan->count() == 0) {
             return response()->json(['saldo' => '0', 'sal' => '0']);
         }
 
-        $input = Tabungan::where('tipe','in')->where('siswa_id',$siswa->id)->sum('jumlah');
-        $output = Tabungan::where('tipe','out')->where('siswa_id',$siswa->id)->sum('jumlah');
-        $verify = Tabungan::where('siswa_id', $siswa->id)->orderBy('created_at','desc')->first()->saldo;
-        if(($input - $output) == $verify){
+        $input = Tabungan::where('tipe', 'in')->where('siswa_id', $siswa->id)->sum('jumlah');
+        $output = Tabungan::where('tipe', 'out')->where('siswa_id', $siswa->id)->sum('jumlah');
+        $verify = Tabungan::where('siswa_id', $siswa->id)->orderBy('created_at', 'desc')->first()->saldo;
+        if (($input - $output) == $verify) {
             return response()->json(['saldo' => $input - $output, 'sal' => format_idr($input - $output)]);
-        }else{
-            return response()->json(['saldo' => '0', 'sal' => 'invalid '.format_idr($input - $output)]);
+        } else {
+            return response()->json(['saldo' => '0', 'sal' => 'invalid ' . format_idr($input - $output)]);
         }
     }
 }

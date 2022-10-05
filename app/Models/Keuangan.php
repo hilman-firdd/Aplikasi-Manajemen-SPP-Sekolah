@@ -12,11 +12,13 @@ class Keuangan extends Model
     protected $guarded = [];
     protected $table = 't_keuangan';
 
-    public function tabungan(){
-        return $this->hasOne('App\Models\Tabungan','id','tabungan_id');
+    public function tabungan()
+    {
+        return $this->hasOne('App\Models\Tabungan', 'id', 'tabungan_id');
     }
 
-    public function transaksi(){
-        return $this->hasOne('App\Models\Transaksi','id','transaksi_id');
+    public function transaksi()
+    {
+        return $this->hasOne('App\Models\Transaksi', 'id', 'transaksi_id');
     }
 }

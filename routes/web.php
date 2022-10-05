@@ -10,6 +10,7 @@ use App\Http\Controllers\KuitansiController;
 use App\Http\Controllers\PenggunaController;
 use App\Http\Controllers\TabunganController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\LaporanController;
 use App\Http\Controllers\TransaksiController;
 
 /*
@@ -118,6 +119,11 @@ Route::prefix('/admin')->middleware('auth')->group(function () {
         Route::get('kuitansi', [KuitansiController::class, 'index'])->name('kuitansi.index');
         Route::post('kuitansi', [KuitansiController::class, 'store'])->name('kuitansi.store');
         Route::get('kuitansi/{kuitansi}', [KuitansiController::class, 'print'])->name('kuitansi.print');
+        /*
+        Laporan
+        */
+        Route::get('laporan', [LaporanController::class, 'index'])->name('laporan.index');
+        Route::get('cetak-data/{tglawal}/{tglakhir}', [LaporanController::class, 'cetak'])->name('cetakdata.cetak');
         /*
         user
         */

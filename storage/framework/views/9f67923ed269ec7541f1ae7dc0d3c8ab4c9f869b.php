@@ -66,7 +66,8 @@
                   </a>
                   <?php endif; // app('laratrust')->permission ?>
                   <?php if (app('laratrust')->isAbleTo('laporan-read')) : ?>
-                  <a href="#" class="item-menu <?php echo e((request()->is('admin/kuitansi*')) ? 'active' : ''); ?>">
+                  <a href="<?php echo e(route('laporan.index')); ?>"
+                        class="item-menu <?php echo e((request()->is('admin/kuitansi*')) ? 'active' : ''); ?>">
                         <i class="fa-solid fa-file-pen icon icon-size"></i>
                         Laporan
                   </a>

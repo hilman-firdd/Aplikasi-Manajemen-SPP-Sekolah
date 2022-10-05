@@ -12,21 +12,20 @@ class KeuanganController extends Controller
     public function index()
     {
         $keuangan = Keuangan::orderBy('created_at', 'desc')->paginate(10);
-        $totalkd = Keuangan::all()->toArray();
-        $jumlahIN = 0;
-        $jumlahOut = 0;
-        $data = Keuangan::get();
-        foreach ($data as $dat) {
-            if ($dat['tipe'] == 'in') {
-                $jumlahIN += $dat['jumlah'];
-            } else if ($dat['tipe'] == 'out') {
-                $jumlahOut += $dat['jumlah'];
-            }
-        }
-        $totalKD = $jumlahIN + $jumlahOut;
+        // $totalkd = Keuangan::all()->toArray();
+        // $jumlahIN = 0;
+        // $jumlahOut = 0;
+        // $data = Keuangan::get();
+        // foreach ($data as $dat) {
+        //     if ($dat['tipe'] == 'in') {
+        //         $jumlahIN += $dat['jumlah'];
+        //     } else if ($dat['tipe'] == 'out') {
+        //         $jumlahOut += $dat['jumlah'];
+        //     }
+        // }
+        // $totalKD = $jumlahIN - $jumlahOut;
         return view('admin.keuangan.index', [
-            'keuangan' => $keuangan,
-            'jml_kd' => $totalKD
+            'keuangan' => $keuangan
         ]);
     }
 

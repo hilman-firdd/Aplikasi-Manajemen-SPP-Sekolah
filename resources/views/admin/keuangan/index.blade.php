@@ -85,7 +85,7 @@
                             <th>KD</th>
                             <th>Keterangan</th>
                             <th>Jumlah</th>
-                            <th>Jumlah Total Penghasilan</th>
+                            <th>Total Kas</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -102,7 +102,7 @@
                             </td>
                             <td style="max-width:150px;">{{ $item->keterangan }}</td>
                             <td>IDR. {{ format_idr($item->jumlah) }}</td>
-                            <td>IDR. {{ format_idr($jml_kd) }}</td>
+                            <td>IDR. {{ format_idr($item->total_kas) }}</td>
                         </tr>
                         @endforeach
                     </tbody>

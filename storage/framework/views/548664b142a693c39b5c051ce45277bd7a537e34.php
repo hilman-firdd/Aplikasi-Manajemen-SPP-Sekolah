@@ -84,7 +84,7 @@
                             <th>KD</th>
                             <th>Keterangan</th>
                             <th>Jumlah</th>
-                            <th>Jumlah Total Penghasilan</th>
+                            <th>Total Kas</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -101,7 +101,7 @@
                             </td>
                             <td style="max-width:150px;"><?php echo e($item->keterangan); ?></td>
                             <td>IDR. <?php echo e(format_idr($item->jumlah)); ?></td>
-                            <td>IDR. <?php echo e(format_idr($jml_kd)); ?></td>
+                            <td>IDR. <?php echo e(format_idr($item->total_kas)); ?></td>
                         </tr>
                         <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                     </tbody>

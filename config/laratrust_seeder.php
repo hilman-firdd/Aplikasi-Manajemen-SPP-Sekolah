@@ -40,8 +40,6 @@ return [
             'laporan' => 'c,r,u,d',
         ],
         'siswa' => [
-            'transaksi-spp' => 'c,r',
-            'tabungan' => 'c,r',
             'siswa' => 'r',
         ]
     ],

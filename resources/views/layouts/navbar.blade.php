@@ -66,7 +66,8 @@
                   </a>
                   @endpermission
                   @permission('laporan-read')
-                  <a href="#" class="item-menu {{ (request()->is('admin/kuitansi*')) ? 'active' : '' }}">
+                  <a href="{{ route('laporan.index') }}"
+                        class="item-menu {{ (request()->is('admin/kuitansi*')) ? 'active' : '' }}">
                         <i class="fa-solid fa-file-pen icon icon-size"></i>
                         Laporan
                   </a>

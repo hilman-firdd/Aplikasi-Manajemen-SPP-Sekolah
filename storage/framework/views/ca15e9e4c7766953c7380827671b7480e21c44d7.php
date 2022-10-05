@@ -43,7 +43,8 @@
                                 <select id="siswa" class="form-control" name="siswa_id">
                                     <option value="#">[-- Pilih Siswa --]</option>
                                     <?php $__currentLoopData = $siswa; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                    <option value="<?php echo e($item->id); ?>"> <?php echo e($item->nama.' - '.$item->kelas->nama.' - '); ?>
+                                    <option value="<?php echo e($item->id); ?>"> <?php echo e($item->nik.' - '.$item->nama.' -
+                                        '.$item->kelas->nama); ?>
 
                                     </option>
                                     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
