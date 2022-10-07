@@ -15,7 +15,7 @@ class PenggunaController extends Controller
      */
     public function index()
     {
-        $users = User::with(['role'])->orderBy('created_at','desc')->paginate(5);
+        $users = User::with(['role'])->orderBy('created_at', 'desc')->paginate(5);
         // $data = json_decode($users);
         // dd($users);
         return view('admin.users.index', ['users' => $users]);
@@ -46,15 +46,15 @@ class PenggunaController extends Controller
             'role' => 'required'
         ]);
 
-        
-        if($user = User::create($request->input())){
+
+        if ($user = User::create($request->input())) {
             $role = Role::find($request->role);
             $user->attachRole($role);
             return redirect()->route('user.index')->with([
                 'type' => 'success',
                 'msg' => 'Pengguna ditambahkan'
             ]);
-        }else{
+        } else {
             return redirect()->route('user.index')->with([
                 'type' => 'danger',
                 'msg' => 'Err.., Terjadi Kesalahan'
@@ -84,7 +84,7 @@ class PenggunaController extends Controller
     {
         $request->validate([
             'name' => 'required|max:255',
-            'email' => 'required|email|unique:users,email,'.$user->id,
+            'email' => 'required|email|unique:users,email,' . $user->id,
             'password' => 'nullable|confirmed|min:8',
             'role' => 'required'
         ]);
@@ -109,18 +109,18 @@ class PenggunaController extends Controller
         //     $user->role()->attach([$bendahara, $user->id]); 
         // }
 
-        if($request->password != null){
+        if ($request->password != null) {
             $user->fill($request->input());
-        }else{
+        } else {
             $user->fill($request->except('password'));
         }
 
-        if($user->save()){
+        if ($user->save()) {
             return redirect()->route('user.index')->with([
                 'type' => 'success',
                 'msg' => 'Pengguna diubah'
             ]);
-        }else{
+        } else {
             return redirect()->route('user.index')->with([
                 'type' => 'danger',
                 'msg' => 'Err.., Terjadi Kesalahan'
@@ -136,12 +136,12 @@ class PenggunaController extends Controller
      */
     public function destroy(User $user)
     {
-        if($user->delete()){
+        if ($user->delete()) {
             return redirect()->route('user.index')->with([
                 'type' => 'success',
                 'msg' => 'Pengguna dihapus'
             ]);
-        }else{
+        } else {
             return redirect()->route('user.index')->with([
                 'type' => 'danger',
                 'msg' => 'Err.., Terjadi Kesalahan'
