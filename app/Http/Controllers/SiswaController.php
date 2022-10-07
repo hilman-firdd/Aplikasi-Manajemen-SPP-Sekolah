@@ -26,11 +26,11 @@ class SiswaController extends Controller
         $q = $request->get('q');
         if ($q == null) {
             $siswa = Siswa::orderBy('created_at', 'desc')
-                ->paginate(15);
+                ->paginate(5);
         } else {
             $siswa = Siswa::where('nama', 'like', '%' . $q . '%')
                 ->orWhere('nik', 'like', '%' . $q . '%')
-                ->orderBy('created_at', 'desc')->paginate(15);
+                ->orderBy('created_at', 'desc')->paginate(5);
         }
 
         $mySiswa = Siswa::orderBy('created_at', 'desc')
