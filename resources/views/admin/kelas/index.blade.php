@@ -39,7 +39,7 @@
                         <tbody>
                         @foreach ($kelas as $index => $item)
                             <tr>
-                                <td><span class="text-muted">{{ $index+1 }}</span></td>
+                                <td><span class="text-muted">{{ (($index+1) + ($kelas->currentPage() * $kelas->perPage()) - $kelas->perPage()) }}</span></td>
                                 <td>{{ (isset($item->periode) ? $item->periode->nama : '-')}}</td>
                                 <td>
                                     {{ $item->nama }}
