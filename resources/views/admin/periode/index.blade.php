@@ -40,7 +40,7 @@
                         <tbody>
                         @foreach ($periode as $index => $item)
                             <tr>
-                                <td><span class="text-muted">{{ $index+1 }}</span></td>
+                                <td><span class="text-muted">{{ (($index+1) + ($periode->currentPage() * $periode->perPage()) - $periode->perPage()) }}</span></td>
                                 <td>{{ $item->nama }}</td>
                                 <td>
                                     {{ $item->tgl_mulai }}

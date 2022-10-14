@@ -40,7 +40,7 @@
                         <tbody>
                         <?php $__currentLoopData = $kelas; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $index => $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                             <tr>
-                                <td><span class="text-muted"><?php echo e($index+1); ?></span></td>
+                                <td><span class="text-muted"><?php echo e((($index+1) + ($kelas->currentPage() * $kelas->perPage()) - $kelas->perPage())); ?></span></td>
                                 <td><?php echo e((isset($item->periode) ? $item->periode->nama : '-')); ?></td>
                                 <td>
                                     <?php echo e($item->nama); ?>
