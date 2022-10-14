@@ -130,7 +130,7 @@
                     <tbody>
                         @foreach ($transaksi as $index => $item)
                         <tr>
-                            <td><span class="text-muted">{{ $index+1 }}</span></td>
+                            <td><span class="text-muted">{{ (($index+1) + ($transaksi->currentPage() * $transaksi->perPage()) - $transaksi->perPage()) }}</span></td>
                             <td>{{ $item->created_at->format('d-m-Y') }}</td>
                             <td>
                                 <a href="{{ route('siswa.show', $item->siswa->id) }}" target="_blank">

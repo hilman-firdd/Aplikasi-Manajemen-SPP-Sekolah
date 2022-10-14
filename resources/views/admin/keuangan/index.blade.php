@@ -91,7 +91,7 @@
                     <tbody>
                         @foreach ($keuangan as $index => $item)
                         <tr>
-                            <td><span class="text-muted">{{ $index+1 }}</span></td>
+                            <td><span class="text-muted">{{ (($index+1) + ($keuangan->currentPage() * $keuangan->perPage()) - $keuangan->perPage()) }}</span></td>
                             <td>{{ $item->created_at->format('d-m-Y') }}</td>
                             <td>
                                 @if($item->tipe == 'in')
