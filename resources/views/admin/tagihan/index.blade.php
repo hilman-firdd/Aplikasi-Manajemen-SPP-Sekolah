@@ -42,7 +42,7 @@
                     <tbody>
                         @foreach ($tagihan as $index => $item)
                         <tr>
-                            <td><span class="text-muted">{{ $index+1 }}</span></td>
+                            <td><span class="text-muted">{{ (($index+1) + ($tagihan->currentPage() * $tagihan->perPage()) - $tagihan->perPage()) }}</span></td>
                             <td>
                                 {{ $item->nama }}
                             </td>

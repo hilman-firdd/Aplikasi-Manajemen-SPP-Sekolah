@@ -41,7 +41,7 @@
                     <tbody>
                         <?php $__currentLoopData = $tagihan; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $index => $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                         <tr>
-                            <td><span class="text-muted"><?php echo e($index+1); ?></span></td>
+                            <td><span class="text-muted"><?php echo e((($index+1) + ($tagihan->currentPage() * $tagihan->perPage()) - $tagihan->perPage())); ?></span></td>
                             <td>
                                 <?php echo e($item->nama); ?>
 
