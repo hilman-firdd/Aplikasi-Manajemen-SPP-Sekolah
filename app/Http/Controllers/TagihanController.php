@@ -47,11 +47,15 @@ class TagihanController extends Controller
     {
         $request->validate([
             'nama' => 'required|max:255',
-            'jumlah' => 'required|numeric',
+            'jumlah' => 'required',
             'peserta' => 'required|numeric'
         ]);
 
+        $hapus = trim($request->jumlah, "Rp. ");
+        $hasilHapus = str_replace(".", "", $hapus);
+
         $tagihan = Tagihan::make($request->except('kelas_id'));
+        $tagihan->jumlah = $hasilHapus;
         if($request->peserta == 1) {
             $tagihan['is_bayar'] = 0;
             $tagihan->wajib_semua = 1;
@@ -109,15 +113,19 @@ class TagihanController extends Controller
      */
     public function update(Request $request, Tagihan $tagihan)
     {
+        // dd($request->all());
+        $hapus = trim($request->jumlah, "Rp. ");
+        $hasilHapus = str_replace(".", "", $hapus);
         $request->validate([
             'nama' => 'required|max:255',
-            'jumlah' => 'required|numeric',
+            'jumlah' => 'required',
             'peserta' => 'required|numeric'
         ]);
 
         $tagihan->fill($request->except('kelas_id'));
         
         //remove all related
+        $tagihan->jumlah = $hasilHapus;
         $tagihan->siswa()->detach();
         $tagihan->kelas_id = null;
         $tagihan->wajib_semua = null;

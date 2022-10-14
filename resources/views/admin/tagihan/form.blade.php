@@ -43,35 +43,11 @@
                         </div>
                         <div class="form-group">
                             <label class="form-label">Jumlah</label>
-                            <input type="number" class="form-control" name="jumlah"
-                                value="{{ isset($tagihan) ? $tagihan->jumlah : old('jumlah') }}" required>
+                            <input type="text" class="form-control" name="jumlah"
+                                value="{{ isset($tagihan) ? "Rp. ". number_format($tagihan->jumlah, 0, ',', '.') : old('jumlah') }}" id="jumlah" required>
                         </div>
                         <div class="form-group">
                             <div class="form-label">Peserta</div>
-                            {{-- <div class="btn-group btn-group-toggle btn-group-pill" data-toggle="buttons">
-                                <label
-                                    class="btn btn-outline-secondary btn-switch-on {{ isset($tagihan) ? ($tagihan->wajib_semua == 1 ? 'active' : '') : '' }}">
-                                    <input type="radio" name="peserta" id="on" value="1" autocomplete="off"
-                                        class="custom-switch-input" {{ isset($tagihan) ? ($tagihan->wajib_semua == 1 ?
-                                    'checked' : '') : 'checked' }}> On
-                                </label>
-                            </div>
-                            <div class="btn-group btn-group-toggle btn-group-pill" data-toggle="buttons">
-                                <label
-                                    class="btn btn-outline-secondary btn-switch-on {{ isset($tagihan) ? (($tagihan->kelas_id != null) ? 'active' : '') : '' }}">
-                                    <input type="radio" name="peserta" id="on" value="2" autocomplete="off"
-                                        class="custom-switch-input" {{ isset($tagihan) ? (($tagihan->kelas_id != null) ?
-                                    'checked' : '') : '' }}> On
-                                </label>
-                            </div>
-                            <div class="btn-group btn-group-toggle btn-group-pill" data-toggle="buttons">
-                                <label
-                                    class="btn btn-outline-secondary btn-switch-on {{ isset($tagihan) ? (($tagihan->kelas_id == null && $tagihan->wajib_semua == null) ? 'active' : '') : '' }}">
-                                    <input type="radio" name="peserta" id="on" value="3" autocomplete="off"
-                                        class="custom-switch-input" {{ isset($tagihan) ? (($tagihan->kelas_id == null &&
-                                    $tagihan->wajib_semua == null) ? 'checked' : '') : '' }}> On
-                                </label>
-                            </div> --}}
 
                             <div class="custom-switch custom-switch-label-onoff d-flex align-items-center">
                                 <input type="checkbox" id="check" name="peserta" value="1" class="custom-switch-input"
@@ -176,5 +152,42 @@
                 $('#hanya-siswa').prop('required', false)
             }
         })
+
+        var jumlah = document.getElementById("jumlah");
+        jumlah.addEventListener("keyup", function(e) {
+        jumlah.value = convertRupiah(this.value, "Rp. ");
+        });
+        jumlah.addEventListener('keydown', function(event) {
+            return isNumberKey(event);
+        });
+
+        function convertRupiah(angka, prefix) {
+        var number_string = angka.replace(/[^,\d]/g, "").toString(),
+            split  = number_string.split(","),
+            sisa   = split[0].length % 3,
+            rupiah = split[0].substr(0, sisa),
+            ribuan = split[0].substr(sisa).match(/\d{3}/gi);
+        
+            if (ribuan) {
+                separator = sisa ? "." : "";
+                rupiah += separator + ribuan.join(".");
+            }
+        
+            rupiah = split[1] != undefined ? rupiah + "," + split[1] : rupiah;
+            return prefix == undefined ? rupiah : rupiah ? prefix + rupiah : "";
+        }
+        
+        function isNumberKey(evt) {
+            key = evt.which || evt.keyCode;
+            if ( 	key != 188 // Comma
+                && key != 8 // Backspace
+                && key != 17 && key != 86 & key != 67 // Ctrl c, ctrl v
+                && (key < 48 || key > 57) // Non digit
+                ) 
+            {
+                evt.preventDefault();
+                return;
+            }
+        }
 </script>
 @endpush
