@@ -33,29 +33,32 @@ class KeuanganController extends Controller
     {
         $request->validate([
             'keperluan' => 'required|in:in,out',
-            'jumlah' => 'required|numeric',
+            'jumlah' => 'required',
             'keterangan' => 'nullable',
         ]);
+
+        $hapus = trim($request->jumlah, "Rp. ");
+        $hasilHapus = str_replace(".", "", $hapus);
 
         $keuangan = Keuangan::orderBy('created_at', 'desc')->first();
         if ($keuangan != null) {
             $simpan = Keuangan::make([
                 'tipe' => $request->keperluan,
-                'jumlah' => $request->jumlah,
+                'jumlah' => $hasilHapus,
                 'keterangan' => $request->keterangan
             ]);
             if ($request->keperluan == 'in') {
-                $simpan->total_kas = $keuangan->total_kas + $request->jumlah;
+                $simpan->total_kas = $keuangan->total_kas + $hasilHapus;
             } else if ($request->keperluan == 'out') {
-                $simpan->total_kas = $keuangan->total_kas - $request->jumlah;
+                $simpan->total_kas = $keuangan->total_kas - $hasilHapus;
             }
         } else {
             $simpan = Keuangan::make([
                 'tipe' => $request->keperluan,
-                'jumlah' => $request->jumlah,
+                'jumlah' => $hasilHapus,
                 'keterangan' => $request->keterangan
             ]);
-            $simpan->total_kas = $request->jumlah;
+            $simpan->total_kas = $hasilHapus;
         }
 
         if ($simpan->save()) {
