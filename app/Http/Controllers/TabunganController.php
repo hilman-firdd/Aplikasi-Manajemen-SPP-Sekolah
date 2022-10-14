@@ -48,9 +48,7 @@ class TabunganController extends Controller
     //api manabung
     public function menabung(Request $request, Siswa $siswa)
     {
-        $hapus = trim($request->jumlah, "Rp. ");
-        $hasilHapus = str_replace(".", "", $hapus);
-        $jumlah_bersih = $hasilHapus;
+        $jumlah_bersih = preg_replace("/[,.]/", "", $request->jumlah);
         DB::beginTransaction();
         $tabungan = Tabungan::where('siswa_id', $siswa->id)->orderBy('created_at', 'desc')->first();
         if ($tabungan != null) {
