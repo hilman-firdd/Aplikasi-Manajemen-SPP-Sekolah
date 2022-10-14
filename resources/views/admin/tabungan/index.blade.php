@@ -105,7 +105,7 @@
                     <tbody>
                         @foreach ($tabungan as $index => $item)
                         <tr>
-                            <td><span class="text-muted">{{ $index+1 }}</span></td>
+                            <td><span class="text-muted">{{ (($index+1) + ($tabungan->currentPage() * $tabungan->perPage()) - $tabungan->perPage()) }}</span></td>
                             <td>{{ $item->created_at->format('d-m-Y') }}</td>
                             <td>
                                 <a href="{{ route('siswa.show', $item->siswa->id) }}" target="_blank">
