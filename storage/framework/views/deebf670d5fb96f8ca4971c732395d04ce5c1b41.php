@@ -20,7 +20,7 @@
       <div class="d-flex align-items-center justify-content-end gap-4">
         <input
           type="text"
-          placeholder="Search report or product"
+          placeholder="Search Report"
           class="search form-control"
         />
         <button
