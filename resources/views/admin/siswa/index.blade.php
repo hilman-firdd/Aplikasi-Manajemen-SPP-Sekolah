@@ -59,7 +59,7 @@
                         @role('superadmin|admin|bendahara')
                         @foreach ($siswa as $index => $item)
                             <tr>
-                                <td><span class="text-muted">{{ $index+1 }}</span></td>
+                                <td><span class="text-muted">{{ (($index+1) + ($siswa->currentPage() * $siswa->perPage()) - $siswa->perPage()) }}</span></td>
                                 <td>{{ $item->nik }}</td>
                                 <td>{{ (isset($item->kelas) ? $item->kelas->nama : '-')}}</td>
                                 <td>
