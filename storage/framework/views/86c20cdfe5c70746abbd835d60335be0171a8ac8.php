@@ -60,7 +60,7 @@
                         <?php if (app('laratrust')->hasRole('superadmin|admin|bendahara')) : ?>
                         <?php $__currentLoopData = $siswa; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $index => $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                             <tr>
-                                <td><span class="text-muted"><?php echo e($index+1); ?></span></td>
+                                <td><span class="text-muted"><?php echo e((($index+1) + ($siswa->currentPage() * $siswa->perPage()) - $siswa->perPage())); ?></span></td>
                                 <td><?php echo e($item->nik); ?></td>
                                 <td><?php echo e((isset($item->kelas) ? $item->kelas->nama : '-')); ?></td>
                                 <td>
