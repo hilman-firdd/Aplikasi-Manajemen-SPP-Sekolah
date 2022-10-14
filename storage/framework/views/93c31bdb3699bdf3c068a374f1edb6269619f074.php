@@ -64,7 +64,7 @@
                             </div>
                             <div class="form-group mb-2" style="display:none" id="form-jumlah">
                                 <label class="form-label">Jumlah</label>
-                                <input type="number" name="jumlah" id="jumlah" class="form-control" min='100'
+                                <input type="text" name="jumlah" id="jumlah" class="form-control" min='100'
                                     placeholder="masukan jumlah tanpa tanda titik atau koma">
                             </div>
                             <div class="form-group mb-2" style="display:none" id="form-keterangan">
@@ -164,7 +164,44 @@
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
 <script>
+    var jumlah = document.getElementById("jumlah");
+    jumlah.addEventListener("keyup", function(e) {
+    jumlah.value = convertRupiah(this.value, "Rp. ");
+    });
+    jumlah.addEventListener('keydown', function(event) {
+        return isNumberKey(event);
+    });
+
+    function convertRupiah(angka, prefix) {
+    var number_string = angka.replace(/[^,\d]/g, "").toString(),
+        split  = number_string.split(","),
+        sisa   = split[0].length % 3,
+        rupiah = split[0].substr(0, sisa),
+        ribuan = split[0].substr(sisa).match(/\d{3}/gi);
+    
+        if (ribuan) {
+            separator = sisa ? "." : "";
+            rupiah += separator + ribuan.join(".");
+        }
+    
+        rupiah = split[1] != undefined ? rupiah + "," + split[1] : rupiah;
+        return prefix == undefined ? rupiah : rupiah ? prefix + rupiah : "";
+    }
+    
+    function isNumberKey(evt) {
+        key = evt.which || evt.keyCode;
+        if ( 	key != 188 // Comma
+            && key != 8 // Backspace
+            && key != 17 && key != 86 & key != 67 // Ctrl c, ctrl v
+            && (key < 48 || key > 57) // Non digit
+            ) 
+        {
+            evt.preventDefault();
+            return;
+        }
+    }
     $(document).ready(function () {
+
         $('#siswa').select2({
             placeholder: "Pilih Siswa",
         });
