@@ -105,7 +105,7 @@
                     <tbody>
                         <?php $__currentLoopData = $tabungan; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $index => $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                         <tr>
-                            <td><span class="text-muted"><?php echo e($index+1); ?></span></td>
+                            <td><span class="text-muted"><?php echo e((($index+1) + ($tabungan->currentPage() * $tabungan->perPage()) - $tabungan->perPage())); ?></span></td>
                             <td><?php echo e($item->created_at->format('d-m-Y')); ?></td>
                             <td>
                                 <a href="<?php echo e(route('siswa.show', $item->siswa->id)); ?>" target="_blank">
