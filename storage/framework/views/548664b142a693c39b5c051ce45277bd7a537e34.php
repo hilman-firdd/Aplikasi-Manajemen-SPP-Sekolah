@@ -92,7 +92,7 @@
                     <tbody>
                         <?php $__currentLoopData = $keuangan; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $index => $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                         <tr>
-                            <td><span class="text-muted"><?php echo e($index+1); ?></span></td>
+                            <td><span class="text-muted"><?php echo e((($index+1) + ($keuangan->currentPage() * $keuangan->perPage()) - $keuangan->perPage())); ?></span></td>
                             <td><?php echo e($item->created_at->format('d-m-Y')); ?></td>
                             <td>
                                 <?php if($item->tipe == 'in'): ?>
