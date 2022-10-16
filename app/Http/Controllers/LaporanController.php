@@ -24,7 +24,7 @@ class LaporanController extends Controller
             'tgl_awal' => $tgl_awal,
             'tgl_akhir' => $tgl_akhir,
             'cetak' => $cetak,
-            'name' => $user[2]->name
+            'name' => $user[3]->name
         ];
         $pdf = PDF::loadView('admin.laporan.laporankeuangan', $data);
         return $pdf->download('laporan-keuangan.pdf');

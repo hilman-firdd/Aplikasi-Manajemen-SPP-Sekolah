@@ -89,7 +89,7 @@
                                 <div style="position: relative">
                                     <img src="{{ asset('ttd.png') }}" width="70" height="70" />
                                 </div>
-                                <p>{{ $user[2]->name }}</p>
+                                <p>{{ $user[3]->name }}</p>
                             </td>
                         </tr>
                     </table>

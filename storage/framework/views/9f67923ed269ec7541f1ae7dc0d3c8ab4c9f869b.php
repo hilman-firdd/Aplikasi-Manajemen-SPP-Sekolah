@@ -96,6 +96,14 @@
                         Settings
                   </a>
                   <?php endif; // app('laratrust')->hasRole ?>
+
+                  <?php if (app('laratrust')->hasRole('kepsek')) : ?>
+                  <a href="<?php echo e(route('pengaturan.index')); ?>" class="item-menu">
+                        <i class="fa-solid fa-gear icon icon-size"></i>
+                        Settings
+                  </a>
+                  <?php endif; // app('laratrust')->hasRole ?>
+                  
                   <a href="#" class="item-menu" onclick="document.getElementById('form-logout').submit();">
                         <i class="fa-solid fa-right-from-bracket icon icon-size"></i>
                         Logout

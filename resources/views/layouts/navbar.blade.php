@@ -96,6 +96,14 @@
                         Settings
                   </a>
                   @endrole
+
+                  @role('kepsek')
+                  <a href="{{ route('pengaturan.index') }}" class="item-menu">
+                        <i class="fa-solid fa-gear icon icon-size"></i>
+                        Settings
+                  </a>
+                  @endrole
+                  
                   <a href="#" class="item-menu" onclick="document.getElementById('form-logout').submit();">
                         <i class="fa-solid fa-right-from-bracket icon icon-size"></i>
                         Logout

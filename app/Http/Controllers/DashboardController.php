@@ -173,7 +173,7 @@ class DashboardController extends Controller
             'date' => $request->date,
             'jumlah' => 0,
             'print' => true,
-            'name' => $user[2]->name
+            'name' => $user[3]->name
         ];
 
         $pdf = \PDF::loadView('admin.dashboard.cetak', $data);

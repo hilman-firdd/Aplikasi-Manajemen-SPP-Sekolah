@@ -38,7 +38,7 @@ class TabunganController extends Controller
             'siswa' => $siswa,
             'tabungan' => $tabungan,
             'saldo' => format_idr($input - $output) . (($input - $output) == $verify ? '' : ' invalid'),
-            'name' => $user[2]->name
+            'name' => $user[3]->name
         ];
 
         $pdf = \PDF::loadView('admin.tabungan.tabunganprint', $data);
@@ -126,7 +126,7 @@ class TabunganController extends Controller
             'siswa' => $siswa,
             'tabungan' => $tabungan,
             'saldo' => format_idr($input - $output) . (($input - $output) == $verify ? '' : ' invalid'),
-            'name' => $user[2]->name
+            'name' => $user[3]->name
         ];
         $pdf = \PDF::loadView('admin.tabungan.print', $data);
         return $pdf->download('laporan-siswa-tabungan.pdf');
