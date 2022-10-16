@@ -49,7 +49,7 @@ class TransaksiController extends Controller
             'siswa' => $siswa,
             'tanggal' => $request->dates,
             'transaksi' => $transaksi,
-            'name' => $user[2]->name
+            'name' => $user[3]->name
         ];
 
         $pdf = \PDF::loadView('admin.tagihan.tagihanspp', $data);
@@ -92,7 +92,7 @@ class TransaksiController extends Controller
         $data = [
             'items' => $transaksi,
             'total' => $total,
-            'name' => $user[2]->name
+            'name' => $user[3]->name
         ];
 
         $pdf = \PDF::loadView('admin.transaksi.transaksiprint', $data);
