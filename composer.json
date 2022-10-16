@@ -14,7 +14,9 @@
         "laravel/tinker": "^2.5",
         "laravel/ui": "^3.4",
         "maatwebsite/excel": "^3.1",
-        "santigarcor/laratrust": "^7.1"
+        "santigarcor/laratrust": "^7.1",
+        "sentry/sdk": "^3.3",
+        "sentry/sentry-laravel": "^2.14"
     },
     "require-dev": {
         "facade/ignition": "^2.5",
