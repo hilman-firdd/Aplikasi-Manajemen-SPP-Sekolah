@@ -29,6 +29,9 @@ return [
             'kelas' => 'c,r,u,d',
             'periode' => 'c,r,u,d',
         ],
+        'kepsek' => [
+            'laporan' => 'c,r,u,d',
+        ],
         'bendahara' => [
             'transaksi-spp' => 'c,r,u,d',
             'tabungan' => 'c,r,u,d',
@@ -37,7 +40,6 @@ return [
             'siswa' => 'c,r,u,d',
             'kelas' => 'c,r,u,d',
             'periode' => 'c,r,u,d',
-            'laporan' => 'c,r,u,d',
         ],
         'siswa' => [
             'siswa' => 'r',
