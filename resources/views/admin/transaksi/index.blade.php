@@ -12,7 +12,7 @@
     <div class="col-12">
         <div class="card">
             <div class="card-header">
-                <h5 class="card-title">Transaksi</h5>
+                <h5 class="card-title">Data Pembayaran SPP</h5>
             </div>
             @if(session()->has('msg'))
             <div class="card-alert alert alert-{{ session()->get('type') }}" id="message"
