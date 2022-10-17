@@ -5,13 +5,13 @@
 <section class="p-5">
     <header>
       <div class="d-flex align-items-center">
-        <h3>Selamat Datang, </h3>  <?php if (app('laratrust')->hasRole('superadmin|admin|bendahara|siswa')) : ?> <h5> Hai.. <?php echo e(Auth::user()->name); ?></h5> <?php endif; // app('laratrust')->hasRole ?>
+        <h3>Selamat Datang, </h3>  <?php if (app('laratrust')->hasRole('superadmin|admin|kepsek|bendahara|siswa')) : ?> <h5> Hai.. <?php echo e(Auth::user()->name); ?></h5> <?php endif; // app('laratrust')->hasRole ?>
       </div>
       <p>Dashboard</p>
     </header>
     <div class="information d-flex flex-column gap-5">
       <div class="row mb-2 gap-5">
-        <?php if (app('laratrust')->hasRole('superadmin|admin|bendahara')) : ?>
+        <?php if (app('laratrust')->hasRole('superadmin|admin|bendahara|kepsek')) : ?>
         <div class="col-xl-4 col-12 card debit justify-content-center align-items-center">
           <h6>Rp. <?php echo e(format_idr($total_uang)); ?></h6>
           <p class="fs-6" style="font-size: 14px!important;">Total Uang</p>

@@ -49,7 +49,7 @@
                             </div>
                         </div>
                         <hr class="bg-color">
-                        <table style="border: 1px solid black; width: 100%; padding:5px;">
+                        <table style="border: 1px solid black; width: 100%; padding:5px;" class="table table-striped">
                             <tr style="border: 1px solid black;">
                                 <th>Tanggal</th>
                                 <th>Nama Siswa</th>
@@ -57,15 +57,15 @@
                                 <th>Diskon</th>
                                 <th>Dibayarkan</th>
                             </tr>
+                            @foreach ($items as $item)
                             <tr>
-                                @foreach ($items as $item)
                                 <td>{{ $item->created_at->format('d-m-Y') }}</td>
                                 <td>{{ $item->siswa->nama }}</td>
                                 <td>{{ $item->tagihan->nama }}</td>
                                 <td>{{ $item->diskon }}</td>
                                 <td>Rp. {{ $item->keuangan->jumlah }}</td>
-                                @endforeach
                             </tr>
+                            @endforeach
                             <tr>
                                 <th colspan="4">Total</th>
                                 <td style="width: 20%;">Rp. <span id="total">{{ $total }}</span></td>

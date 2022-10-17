@@ -5,13 +5,13 @@
 <section class="p-5">
     <header>
       <div class="d-flex align-items-center">
-        <h3>Selamat Datang, </h3>  @role('superadmin|admin|bendahara|siswa') <h5> Hai.. {{ Auth::user()->name }}</h5> @endrole
+        <h3>Selamat Datang, </h3>  @role('superadmin|admin|kepsek|bendahara|siswa') <h5> Hai.. {{ Auth::user()->name }}</h5> @endrole
       </div>
       <p>Dashboard</p>
     </header>
     <div class="information d-flex flex-column gap-5">
       <div class="row mb-2 gap-5">
-        @role('superadmin|admin|bendahara')
+        @role('superadmin|admin|bendahara|kepsek')
         <div class="col-xl-4 col-12 card debit justify-content-center align-items-center">
           <h6>Rp. {{ format_idr($total_uang) }}</h6>
           <p class="fs-6" style="font-size: 14px!important;">Total Uang</p>
