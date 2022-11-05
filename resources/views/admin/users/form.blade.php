@@ -48,7 +48,9 @@
                                     <?php endif;?>
                                     <option value="1" {{ isset($user) ? ($user->role == 'superadmin' ? 'selected' : '') : '' }}>superadmin</option>
                                     <option value="2" {{ isset($user) ? ($user->role == 'admin' ? 'selected' : '') : '' }}>admin</option>
-                                    <option value="3" {{ isset($user) ? ($user->role == 'bendahara' ? 'selected' : '') : '' }}>bendahara</option>
+                                    <option value="3" {{ isset($user) ? ($user->role == 'kepsek' ? 'selected' : '') : '' }}>kepsek</option>
+                                    <option value="4" {{ isset($user) ? ($user->role == 'bendahara' ? 'selected' : '') : '' }}>bendahara</option>
+                                    <option value="5" {{ isset($user) ? ($user->role == 'siswa' ? 'selected' : '') : '' }}>siswa</option>
                                 </select>
                             </div>
                         </div>
