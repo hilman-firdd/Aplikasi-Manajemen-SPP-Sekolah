@@ -44,7 +44,7 @@ class SiswaImport implements ToCollection
                 $siswa['id'] = $user->id;
                 $user_id = $user->id;
                 $siswa->save();
-                $role_id = 4;
+                $role_id = 5;
                 $user_type = 'App\Models\User';
 
                 DB::table('role_user')->insert(
