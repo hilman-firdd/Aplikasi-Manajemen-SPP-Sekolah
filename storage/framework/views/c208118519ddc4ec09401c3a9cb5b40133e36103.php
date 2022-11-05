@@ -46,7 +46,9 @@
                                     <?php endif;?>
                                     <option value="1" <?php echo e(isset($user) ? ($user->role == 'superadmin' ? 'selected' : '') : ''); ?>>superadmin</option>
                                     <option value="2" <?php echo e(isset($user) ? ($user->role == 'admin' ? 'selected' : '') : ''); ?>>admin</option>
-                                    <option value="3" <?php echo e(isset($user) ? ($user->role == 'bendahara' ? 'selected' : '') : ''); ?>>bendahara</option>
+                                    <option value="3" <?php echo e(isset($user) ? ($user->role == 'kepsek' ? 'selected' : '') : ''); ?>>kepsek</option>
+                                    <option value="4" <?php echo e(isset($user) ? ($user->role == 'bendahara' ? 'selected' : '') : ''); ?>>bendahara</option>
+                                    <option value="5" <?php echo e(isset($user) ? ($user->role == 'siswa' ? 'selected' : '') : ''); ?>>siswa</option>
                                 </select>
                             </div>
                         </div>

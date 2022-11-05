@@ -24,17 +24,32 @@ class DashboardController extends Controller
 {
     public function index()
     {
+        // $dataRole = [];
+        // foreach($roles as $role) {
+        //     array_push($dataRole, [
+        //         'name' => $role->name
+        //     ]);
+        // }
+    
+
         $total_uang = Keuangan::where('tipe', 'in')->sum('jumlah') - Keuangan::where('tipe', 'out')->sum('jumlah');
         $total_uang_tabungan = Keuangan::where('tipe', 'in')->where('tabungan_id', '!=', 'null')->sum('jumlah') - Keuangan::where('tipe', 'out')->where('tabungan_id', '!=', 'null')->sum('jumlah');
         $total_uang_spp = Keuangan::where('tipe', 'in')->where('transaksi_id', '!=', 'null')->sum('jumlah') - Keuangan::where('tipe', 'out')->where('transaksi_id', '!=', 'null')->sum('jumlah');;
         $total_uang_masuk = Keuangan::where('tipe', 'in')->sum('jumlah');
         $total_uang_keluar = Keuangan::where('tipe', 'out')->sum('jumlah');
 
-        $transaksi = Transaksi::orderBy('siswa_id', 'desc')->whereDate('created_at', now()->today())->get();
-
-
         //siswa
-        $siswa = Auth::user();
+        $id_siswa = Auth::user();
+        $siswa = Auth::user()->role[0]->name;
+        
+        if($siswa == "siswa") {
+            $transaksi = Transaksi::orderBy('siswa_id', 'desc')
+                        ->where('siswa_id', $id_siswa->id)
+                        ->whereDate('created_at', now()->today())->get();
+        }else{
+            $transaksi = Transaksi::orderBy('siswa_id', 'desc')->whereDate('created_at', now()->today())->get();            
+        }
+
         $total_uang_tabungan_siswa = DB::table('t_role')
             ->select('t_tagihan.jumlah')
             ->join('t_tagihan', 't_tagihan.id', '=', 't_role.tagihan_id')

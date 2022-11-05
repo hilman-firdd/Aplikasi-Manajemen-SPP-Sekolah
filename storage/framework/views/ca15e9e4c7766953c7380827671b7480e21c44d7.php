@@ -12,7 +12,7 @@
     <div class="col-12">
         <div class="card">
             <div class="card-header">
-                <h5 class="card-title">Pembayaran SPP</h5>
+                <h5 class="card-title">Data Pembayaran SPP</h5>
             </div>
             <?php if(session()->has('msg')): ?>
             <div class="card-alert alert alert-<?php echo e(session()->get('type')); ?>" id="message"
